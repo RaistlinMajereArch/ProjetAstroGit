@@ -353,25 +353,25 @@ public class App {
 		}
 		else if (choixModif.equalsIgnoreCase("positionx"))
 		{
-			p.setX(saisieInt("Saisissez une nouvelle position en x par rapport à l'etoile"));
+			p.setX(saisieDouble("Saisissez une nouvelle position en x par rapport à l'etoile"));
 			daoSI.update(p);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("positiony"))
 		{
-			p.setY(saisieInt("Saisissez une nouvelle position en y par rapport à l'etoile"));
+			p.setY(saisieDouble("Saisissez une nouvelle position en y par rapport à l'etoile"));
 			daoSI.update(p);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("vitessex"))
 		{
-			p.setVx(saisieInt("Saisissez une nouvelle vitesse en x par rapport à l'etoile"));
+			p.setVx(saisieDouble("Saisissez une nouvelle vitesse en x par rapport à l'etoile"));
 			daoSI.update(p);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("vitessey"))
 		{
-			p.setVy(saisieInt("Saisissez une nouvelle vitesse en y par rapport à l'etoile"));
+			p.setVy(saisieDouble("Saisissez une nouvelle vitesse en y par rapport à l'etoile"));
 			daoSI.update(p);
 			chargerSysteme();
 		}
@@ -445,25 +445,25 @@ public class App {
 		}
 		else if (choixModif.equalsIgnoreCase("positionx"))
 		{
-			s.setX(saisieInt("Saisissez une nouvelle position en x par rapport à l'etoile"));
+			s.setX(saisieDouble("Saisissez une nouvelle position en x par rapport à l'etoile"));
 			daoSI.update(s);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("positiony"))
 		{
-			s.setY(saisieInt("Saisissez une nouvelle position en y par rapport à l'etoile"));
+			s.setY(saisieDouble("Saisissez une nouvelle position en y par rapport à l'etoile"));
 			daoSI.update(s);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("vitessex"))
 		{
-			s.setVx(saisieInt("Saisissez une nouvelle vitesse en x par rapport à l'etoile"));
+			s.setVx(saisieDouble("Saisissez une nouvelle vitesse en x par rapport à l'etoile"));
 			daoSI.update(s);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("vitessey"))
 		{
-			s.setVy(saisieInt("Saisissez une nouvelle vitesse en y par rapport à l'etoile"));
+			s.setVy(saisieDouble("Saisissez une nouvelle vitesse en y par rapport à l'etoile"));
 			daoSI.update(s);
 			chargerSysteme();
 		}
