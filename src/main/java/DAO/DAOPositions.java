@@ -54,7 +54,7 @@ public class DAOPositions implements IDAO<Position,Integer> {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(urlBDD,loginBDD,passwordBDD);
 
-			PreparedStatement ps = conn.prepareStatement("SELECT * from positions where id_corpsCeleste=?");
+			PreparedStatement ps = conn.prepareStatement("SELECT * from positions where id_corpsCeleste=? ORDER BY id_timeStep");
 			ps.setInt(1, id);
 
 			ResultSet rs = ps.executeQuery();

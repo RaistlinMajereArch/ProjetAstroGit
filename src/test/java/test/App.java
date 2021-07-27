@@ -1,12 +1,17 @@
 package test;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+
 import metier.Admin;
 import metier.Compte;
 import metier.CorpsCeleste;
+import metier.Courbe;
 import metier.Planete;
 import metier.Position;
 import metier.Etoile;
@@ -268,6 +273,34 @@ public class App {
 		daoS.deleteAll();
 		daoSI.deleteAll();
 		daoP.deleteAll();
+	}
+	
+	public static void affichageTrajectoire() { //affiche la trajectoire des corps celestes 
+		int [] x;
+		int[] y;
+		List<int []> lx= new ArrayList<>();
+		List<int []> ly= new ArrayList<>();
+		List<CorpsCeleste> systeme = daoS.findAll();
+		List<Position> positions;
+		for (CorpsCeleste c : systeme) { //parcours les corps du systemes et recuperes les listes de positions x et y
+			positions = daoP.findByIdCorps(c.getId());
+			x = new int[positions.size()];
+			y = new int[positions.size()];
+			for (int p=0;p<positions.size();p++) {
+				x[p]=(int) Math.round(positions.get(p).getX());
+				y[p]=(int) Math.round(positions.get(p).getY());
+			}
+			lx.add(x);
+			ly.add(y);
+		}
+		JFrame frame = new JFrame("Draw a line");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		Courbe panel = new Courbe(lx,ly);
+		panel.setPreferredSize(new Dimension(2500,2500));
+		JScrollPane jsp = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		frame.add(jsp);
+		frame.setVisible(true);		
 	}
 }		
 
