@@ -353,25 +353,25 @@ public class App {
 		}
 		else if (choixModif.equalsIgnoreCase("positionx"))
 		{
-			p.setX(saisieDouble("Saisissez une nouvelle position en x par rapport à l'etoile"));
+			p.setX(saisieDouble("Saisissez une nouvelle position en x par rapport ï¿½ l'etoile"));
 			daoSI.update(p);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("positiony"))
 		{
-			p.setY(saisieDouble("Saisissez une nouvelle position en y par rapport à l'etoile"));
+			p.setY(saisieDouble("Saisissez une nouvelle position en y par rapport ï¿½ l'etoile"));
 			daoSI.update(p);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("vitessex"))
 		{
-			p.setVx(saisieDouble("Saisissez une nouvelle vitesse en x par rapport à l'etoile"));
+			p.setVx(saisieDouble("Saisissez une nouvelle vitesse en x par rapport ï¿½ l'etoile"));
 			daoSI.update(p);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("vitessey"))
 		{
-			p.setVy(saisieDouble("Saisissez une nouvelle vitesse en y par rapport à l'etoile"));
+			p.setVy(saisieDouble("Saisissez une nouvelle vitesse en y par rapport ï¿½ l'etoile"));
 			daoSI.update(p);
 			chargerSysteme();
 		}
@@ -445,25 +445,25 @@ public class App {
 		}
 		else if (choixModif.equalsIgnoreCase("positionx"))
 		{
-			s.setX(saisieDouble("Saisissez une nouvelle position en x par rapport à l'etoile"));
+			s.setX(saisieDouble("Saisissez une nouvelle position en x par rapport ï¿½ l'etoile"));
 			daoSI.update(s);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("positiony"))
 		{
-			s.setY(saisieDouble("Saisissez une nouvelle position en y par rapport à l'etoile"));
+			s.setY(saisieDouble("Saisissez une nouvelle position en y par rapport ï¿½ l'etoile"));
 			daoSI.update(s);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("vitessex"))
 		{
-			s.setVx(saisieDouble("Saisissez une nouvelle vitesse en x par rapport à l'etoile"));
+			s.setVx(saisieDouble("Saisissez une nouvelle vitesse en x par rapport ï¿½ l'etoile"));
 			daoSI.update(s);
 			chargerSysteme();
 		}
 		else if (choixModif.equalsIgnoreCase("vitessey"))
 		{
-			s.setVy(saisieDouble("Saisissez une nouvelle vitesse en y par rapport à l'etoile"));
+			s.setVy(saisieDouble("Saisissez une nouvelle vitesse en y par rapport ï¿½ l'etoile"));
 			daoSI.update(s);
 			chargerSysteme();
 		}
@@ -506,16 +506,16 @@ public class App {
 				double[] accelerations =c.calculAcceleration(forces);
 
 				c.calculVitesse(accelerations);
-				System.out.println(c.getVx()+ " " + c.getVy());
+				//System.out.println(c.getVx()+ " " + c.getVy());
 				c.calculPosition();
-				System.out.println(c.getX()+ " " + c.getY());
+				//System.out.println(c.getX()+ " " + c.getY());
 			}
 		}
 	}
 	public static void simulation() {//lance et genere la simulation
 		int timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
 		initSimu();
-		System.out.println(systeme);
+		//System.out.println(systeme);
 		for (int t=1;t<=timestep;t++) {
 			avancerTimeStepSysteme();
 			for(int i=0;i<systeme.size();i++) {
