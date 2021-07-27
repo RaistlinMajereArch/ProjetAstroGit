@@ -2,6 +2,7 @@ package test;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -489,7 +490,7 @@ public class App {
 	}
 	public static void avancerTimeStepSysteme() {// fait avancer l'ensemble du systeme d'un timestep
 		systeme2= systeme;
-		for (int i=0;i<systeme.size();i++) {
+		for (int i=1;i<systeme.size();i++) {
 			avancerTimeStepCorps(systeme.get(i));
 		}
 	}
@@ -498,9 +499,12 @@ public class App {
 			if (c.getId() != systeme2.get(i).getId()) {
 				List<double[]> forces = new ArrayList<>();
 				forces.add(c.calculForce(systeme2.get(i)));
-				System.out.println(forces.toString());
+				for (double[] f: forces) {
+					System.out.println(Arrays.toString(f));	
+				}
+				//System.out.println(forces.toString());
 				double[] accelerations =c.calculAcceleration(forces);
-				System.out.println(accelerations.toString());
+
 				c.calculVitesse(accelerations);
 				System.out.println(c.getVx()+ " " + c.getVy());
 				c.calculPosition();
@@ -525,11 +529,11 @@ public class App {
 		affichageTrajectoire();
 	}
 	public static void initSimu() {//initialise la simulation
-		systeme=daoSI.findAll();
+		systeme2=daoSI.findAll();
 		for(int i=0;i<systeme2.size();i++) {
 			daoS.insert(systeme2.get(i));
 		}
-		systeme2=daoS.findAll();
+		systeme=daoS.findAll();
 		for(int i=0;i<systeme.size();i++) {
 			Position p=new Position(0,systeme.get(i).getId(),systeme.get(i).getX(),systeme.get(i).getY());
 			daoP.insert(p);

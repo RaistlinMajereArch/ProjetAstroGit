@@ -46,9 +46,8 @@ public abstract class CorpsCeleste {
 	public double[] calculForce(CorpsCeleste c) {
 		double [] force= {0,0};
 		double distance=Math.sqrt(Math.pow((this.x-c.x),2)+Math.pow((this.y-c.y),2));
-		
-		force[0]=G*(this.masse*c.masse)/((this.x-c.x)/Math.pow(distance,3));
-		force[1]=G*(this.masse*c.masse)/((this.y-c.y)/Math.pow(distance,3));
+		force[0]=G*(this.masse*c.masse)*((this.x-c.x)/Math.pow(distance,3));
+		force[1]=G*(this.masse*c.masse)*((this.y-c.y)/Math.pow(distance,3));
 		/*double distance=Math.sqrt(Math.pow((this.x-c.x),2)+Math.pow((this.y-c.y),2));
 		double forceVector=G*(this.masse*c.masse)/Math.pow(distance,2);
 		double angle=Math.atan2((c.y-this.y),(c.x-this.x));
