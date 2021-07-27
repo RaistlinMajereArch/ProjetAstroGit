@@ -204,7 +204,8 @@ public class DAOSystemeInit implements IDAO<CorpsCeleste,Integer> {
 
 			PreparedStatement ps = conn.prepareStatement("DELETE from systeminit");
 			ps.executeUpdate();
-
+			ps = conn.prepareStatement("ALTER TABLE systeminit AUTO_INCREMENT = 1");
+			ps.executeUpdate();
 			ps.close();
 			conn.close();
 		}
