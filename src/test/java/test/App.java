@@ -8,10 +8,12 @@ import metier.Admin;
 import metier.Compte;
 import metier.CorpsCeleste;
 import metier.Planete;
+import metier.Position;
 import metier.Etoile;
 import metier.Satellite;
 import metier.Utilisateur;
 import DAO.DAOCompte;
+import DAO.DAOPositions;
 import DAO.DAOSystemeInit;
 import DAO.DAOSysteme;
 
@@ -20,6 +22,7 @@ public class App {
 	static DAOCompte daoC = new DAOCompte();
 	static DAOSystemeInit daoSI = new DAOSystemeInit();
 	static DAOSysteme daoS = new DAOSysteme();
+	static DAOPositions daoP = new DAOPositions();
 	static List<CorpsCeleste> systeme=new ArrayList<>();
 
 	public static int saisieInt(String msg) 
@@ -241,6 +244,33 @@ public class App {
 			c.calculPosition();
 		}
 	}
+	public static void simulation() {//lance et génère la simulation
+		int timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
+		initSimu();
+		for (int t=1;t<timestep;t++) {
+			avancerTimeStepSysteme();
+			for(int i=0;i<systeme.size();i++) {
+				daoS.update(systeme.get(i));
+			}
+			for(int i=0;i<systeme.size();i++) {
+				Position p=new Position(1,systeme.get(i).getId(),systeme.get(i).getX(),systeme.get(i).getY());
+				daoP.insert(p);
+			}
+		}
+	}
+	private static void initSimu() {//initialise la simulation
+
+		List<CorpsCeleste> systeme2=daoSI.findAll();
+		for(int i=0;i<systeme2.size();i++) {
+			daoS.insert(systeme2.get(i));
+		}
+		systeme2=daoS.findAll();
+		for(int i=0;i<systeme2.size();i++) {
+			Position p=new Position(1,systeme2.get(i).getId(),systeme2.get(i).getX(),systeme2.get(i).getY());
+			daoP.insert(p);
+		}
+	}
+
 }		
 
 
