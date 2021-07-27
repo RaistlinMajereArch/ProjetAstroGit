@@ -11,7 +11,7 @@ public abstract class CorpsCeleste {
 	protected double y;
 	protected double vx;
 	protected double vy;
-	protected boolean etat;
+	protected boolean etat=true;
 	protected String nom;
 	protected int id_parent;
 	
