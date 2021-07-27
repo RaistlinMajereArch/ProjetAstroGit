@@ -31,15 +31,15 @@ public class DAOSysteme implements IDAO<CorpsCeleste,Integer>{
 
 			while(rs.next()) 
 			{
-				if(rs.getString("type").equals("Planete")) {
+				if(rs.getString("type").equals("planete")) {
 					c = new Planete(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getDouble("x"),rs.getDouble("y"),rs.getDouble("vx"),rs.getDouble("vy"),rs.getBoolean("etat"),rs.getString("nom"),rs.getInt("id_parent"));
 				}
-				else if(rs.getString("type").equals("Etoile")) {
+				else if(rs.getString("type").equals("etoile")) {
 					c = new Etoile(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getBoolean("etat"),rs.getString("nom"));
 					//int id, double masse, double diametre, boolean etat,
 					//String nom
 				}
-				else if(rs.getString("type").equals("Satellite")) {
+				else if(rs.getString("type").equals("satellite")) {
 					c = new Satellite(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getDouble("x"),rs.getDouble("y"),rs.getDouble("vx"),rs.getDouble("vy"),rs.getBoolean("etat"),rs.getString("nom"),rs.getInt("id_parent"));
 				}
 			}
@@ -70,17 +70,17 @@ public class DAOSysteme implements IDAO<CorpsCeleste,Integer>{
 
 			while(rs.next()) 
 			{
-				if(rs.getString("type").equals("Planete")) {
+				if(rs.getString("type").equals("planete")) {
 					Planete c = new Planete(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getDouble("x"),rs.getDouble("y"),rs.getDouble("vx"),rs.getDouble("vy"),rs.getBoolean("etat"),rs.getString("nom"),rs.getInt("id_parent"));
 					corpsCelestes.add(c);
 				}
-				else if(rs.getString("type").equals("Etoile")) {
+				else if(rs.getString("type").equals("etoile")) {
 					Etoile e = new Etoile(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getBoolean("etat"),rs.getString("nom"));
 					corpsCelestes.add(e);
 					//int id, double masse, double diametre, boolean etat,
 					//String nom
 				}
-				else if(rs.getString("type").equals("Satellite")) {
+				else if(rs.getString("type").equals("satellite")) {
 					Satellite s = new Satellite(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getDouble("x"),rs.getDouble("y"),rs.getDouble("vx"),rs.getDouble("vy"),rs.getBoolean("etat"),rs.getString("nom"),rs.getInt("id_parent"));
 					corpsCelestes.add(s);
 				}
