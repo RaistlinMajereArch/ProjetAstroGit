@@ -29,6 +29,7 @@ public class App {
 	static DAOSysteme daoS = new DAOSysteme();
 	static DAOPositions daoP = new DAOPositions();
 	static List<CorpsCeleste> systeme=new ArrayList<>();
+	static List<CorpsCeleste> systeme2= new ArrayList<>();
 
 	public static int saisieInt(String msg) 
 	{
@@ -487,15 +488,16 @@ public class App {
 		
 	}
 	public static void avancerTimeStepSysteme() {// fait avancer l'ensemble du systeme d'un timestep
+		systeme2= systeme;
 		for (int i=0;i<systeme.size();i++) {
 			avancerTimeStepCorps(systeme.get(i));
 		}
 	}
 	public static void avancerTimeStepCorps(CorpsCeleste c) {// fait avancer un corps celeste d'un timestep
 		for (int i=0;i<systeme.size();i++) {
-			if (c.getId() != systeme.get(i).getId()) {
+			if (c.getId() != systeme2.get(i).getId()) {
 				List<double[]> forces = new ArrayList<>();
-				forces.add(c.calculForce(systeme.get(i)));
+				forces.add(c.calculForce(systeme2.get(i)));
 				System.out.println(forces.toString());
 				double[] accelerations =c.calculAcceleration(forces);
 				System.out.println(accelerations.toString());
@@ -523,12 +525,11 @@ public class App {
 		affichageTrajectoire();
 	}
 	public static void initSimu() {//initialise la simulation
-
-		List<CorpsCeleste> systeme2=daoSI.findAll();
+		systeme=daoSI.findAll();
 		for(int i=0;i<systeme2.size();i++) {
 			daoS.insert(systeme2.get(i));
 		}
-		systeme=daoS.findAll();
+		systeme2=daoS.findAll();
 		for(int i=0;i<systeme.size();i++) {
 			Position p=new Position(0,systeme.get(i).getId(),systeme.get(i).getX(),systeme.get(i).getY());
 			daoP.insert(p);
