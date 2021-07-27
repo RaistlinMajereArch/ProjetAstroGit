@@ -46,6 +46,35 @@ public class DAOPositions implements IDAO<Position,Integer> {
 		return positions;
 	}
 	
+	public List<Position> findByIdCorps(Integer id) {
+		List<Position> positions = new ArrayList<Position>();
+		Position p= null;
+		try 
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(urlBDD,loginBDD,passwordBDD);
+
+			PreparedStatement ps = conn.prepareStatement("SELECT * from positions where id_corpsCeleste=?");
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			while(rs.next()) 
+			{
+				p=new Position(rs.getInt("id_timeStep"),rs.getInt("id_corpsCeleste"),rs.getDouble("x"),rs.getDouble("y"));
+				positions.add(p);
+			}
+
+			rs.close();
+			ps.close();
+			conn.close();
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return positions;
+	}
 	@Override
 	public Position findById(Integer id) {
 		Position p= null;
