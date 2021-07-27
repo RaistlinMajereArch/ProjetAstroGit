@@ -157,13 +157,13 @@ public class DAOSystemeInit implements IDAO<CorpsCeleste,Integer> {
 			ps.setDouble(2, c.getDiametre());
 			ps.setInt(3, c.getIdParent());
 			if (c instanceof Etoile){
-				ps.setString(4, "Etoile");
+				ps.setString(4, "etoile");
 			}
 			else if (c instanceof Planete){
-				ps.setString(4, "Planete");
+				ps.setString(4, "planete");
 			}
 			else if (c instanceof Satellite){
-				ps.setString(4, "Satellite");
+				ps.setString(4, "satellite");
 			}
 			ps.setDouble(5, c.getX());
 			ps.setDouble(6, c.getY());
