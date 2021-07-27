@@ -54,11 +54,11 @@ public class App {
 
 	}
 
-	public static void menuPrincipal() {
+	public static void menuPrincipal() {// genere le menu principal et propose les options
 
 		System.out.println("\nCree ton systeme solaire!");
 		System.out.println("1- Se connecter");
-		System.out.println("2- Crï¿½ation d'un compte utilisateur");
+		System.out.println("2- Creation d'un compte utilisateur");
 		System.out.println("3- Fermer l'appli");
 		int choix = saisieInt("Choisir un menu");
 		switch(choix) 
@@ -76,7 +76,7 @@ public class App {
 			menuPrincipal();
 		}
 	}
-	public static void menuUtilisateur() {
+	public static void menuUtilisateur() {// genere le menu de l'utilisateur et propose les options
 		System.out.println("\nMenu");
 		System.out.println("1- Creer un systeme");
 		System.out.println("2- Charger un systeme");
@@ -92,7 +92,7 @@ public class App {
 		menuUtilisateur();
 	}
 
-	public static void creerEtoile(){
+	public static void creerEtoile(){// cree une etoile au centre du systeme, immobile
 		String nomEtoile = saisieString("\nSaisir le nom de l'etoile");
 		Double masseEtoile=0d;
 		Double diametreEtoile=0.0;
@@ -135,7 +135,7 @@ public class App {
 		}
 	}
 
-	public static void creerPlanete(Etoile e){
+	public static void creerPlanete(Etoile e){ // cree une planete et ses eventuels satellites
 		String nomPlanete=saisieString("Saisir le nom de la planete");
 		boolean massePlaneteOk = true;
 		Double massePlanete = e.getMasse();
@@ -216,12 +216,12 @@ public class App {
 	public static void chargerSysteme(){
 		daoS.findAll();
 	}
-	public static void avancerTimeStepSysteme() {
+	public static void avancerTimeStepSysteme() {// fait avancer l'ensemble du systeme d'un timestep
 		for (int i=1;i<systeme.size();i++) {
 			avancerTimeStepCorps(systeme.get(i));
 		}
 	}
-	public static void avancerTimeStepCorps(CorpsCeleste c) {
+	public static void avancerTimeStepCorps(CorpsCeleste c) {// fait avancer un corps celeste d'un timestep
 		for (int i=1;i<systeme.size();i++) {
 			List<double[]> forces = null;
 			forces.add(c.calculForce(systeme.get(i)));
@@ -230,7 +230,7 @@ public class App {
 			c.calculPosition();
 		}
 	}
-	public static void simulation() {//lance et gï¿½nï¿½re la simulation
+	public static void simulation() {//lance et genere la simulation
 		int timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
 		initSimu();
 		for (int t=1;t<timestep;t++) {
@@ -256,12 +256,12 @@ public class App {
 			daoP.insert(p);
 		}
 	}
-	public static void retourT0() {
+	public static void retourT0() {//supprime les bdd de systeme et positions et réinitialise à t0
 		daoS.deleteAll();
 		daoP.deleteAll();
 		initSimu();
 	}
-	public static void supprimerSimu() {
+	public static void supprimerSimu() {//supprime les bdd de systeme, positions et systeme init
 		daoS.deleteAll();
 		daoSI.deleteAll();
 		daoP.deleteAll();
