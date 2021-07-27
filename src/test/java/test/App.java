@@ -92,9 +92,7 @@ public class App {
 		menuUtilisateur();
 	}
 
-	public static void creerEtoile(){
-		// cree une etoile au centre du systeme, immobile
-	}
+	
 	public static void menuModifier() {
 		System.out.println("\nModifier un corps");
 		System.out.println("1- Modifier une etoile");
@@ -111,7 +109,8 @@ public class App {
 	}
 		
 
-	public static void creerEtoile(){
+	public static void creerEtoile() {
+		// cree une etoile au centre du systeme, immobile
 		String nomEtoile = saisieString("\nSaisir le nom de l'etoile");
 		Double masseEtoile=0d;
 		Double diametreEtoile=0.0;
