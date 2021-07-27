@@ -171,7 +171,7 @@ public class DAOPositions implements IDAO<Position,Integer> {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(urlBDD,loginBDD,passwordBDD);
 
-			PreparedStatement ps = conn.prepareStatement("DELETE from system");
+			PreparedStatement ps = conn.prepareStatement("DELETE from positions");
 			ps.executeUpdate();
 
 			ps.close();
