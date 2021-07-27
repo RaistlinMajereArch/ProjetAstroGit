@@ -30,7 +30,7 @@ public class DAOSystemeInit implements IDAO<CorpsCeleste,Integer> {
 				while(rs.next()) 
 				{
 					if(rs.getString("type").equals("Planete")) {
-						c = new Planete(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getDouble("x"),rs.getDouble("y"),rs.getDouble("vx"),rs.getDouble("vy"),rs.getBoolean("etat"),rs.getString("nom"),rs.getInt("id_parent"));
+						c = new Planete(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getDouble("x0"),rs.getDouble("y0"),rs.getDouble("vx0"),rs.getDouble("vy0"),rs.getBoolean("etat"),rs.getString("nom"),rs.getInt("id_parent"));
 					}
 					else if(rs.getString("type").equals("Etoile")) {
 						c = new Etoile(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getBoolean("etat"),rs.getString("nom"));
@@ -38,7 +38,7 @@ public class DAOSystemeInit implements IDAO<CorpsCeleste,Integer> {
 						//String nom
 					}
 					else if(rs.getString("type").equals("Satellite")) {
-						c = new Satellite(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getDouble("x"),rs.getDouble("y"),rs.getDouble("vx"),rs.getDouble("vy"),rs.getBoolean("etat"),rs.getString("nom"),rs.getInt("id_parent"));
+						c = new Satellite(rs.getInt("id"),rs.getDouble("masse"),rs.getDouble("diametre"),rs.getDouble("x0"),rs.getDouble("y0"),rs.getDouble("vx0"),rs.getDouble("vy0"),rs.getBoolean("etat"),rs.getString("nom"),rs.getInt("id_parent"));
 					}
 				}
 
@@ -103,7 +103,7 @@ public class DAOSystemeInit implements IDAO<CorpsCeleste,Integer> {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(urlBDD,loginBDD,passwordBDD);
 			
-			PreparedStatement ps = conn.prepareStatement("INSERT into systeminit (masse,diametre,id_parent,type,x,y,vx,vy,etat,nom) VALUES (?,?,?,?,?,?,?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT into systeminit (masse,diametre,id_parent,type,x0,y0,vx0,vy0,etat,nom) VALUES (?,?,?,?,?,?,?,?,?,?)");
 
 			ps.setDouble(1, c.getMasse());
 			ps.setDouble(2, c.getDiametre());
