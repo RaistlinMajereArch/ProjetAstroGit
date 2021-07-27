@@ -3,4 +3,4 @@ target/
 .classpath
 .project
 .DS_Store
-src/main/DAO/IDAO.java
+src/main/java/DAO/IDAO.java
