@@ -99,7 +99,7 @@ public class App {
 		boolean masseEtoileOk = false;
 		boolean diametreEtoileOk = false;
 		while (!masseEtoileOk) {
-			masseEtoile = saisieDouble("Saisir la masse de l'etoile");
+			masseEtoile = saisieDouble("Saisir la masse de l'etoile (en kg)");
 			if (masseEtoile <= 0d) {
 				System.out.println("La masse de l'etoile est incorrecte");
 			} else {
@@ -107,7 +107,7 @@ public class App {
 			}
 		}
 		while (!diametreEtoileOk) {
-			diametreEtoile = saisieDouble("Saisir le diametre de l'etoile");
+			diametreEtoile = saisieDouble("Saisir le diametre de l'etoile (en km)");
 			if (diametreEtoile <= 0d) {
 				System.out.println("Le diametre de l'etoile est incorrect");
 			} else {
@@ -140,7 +140,7 @@ public class App {
 		boolean massePlaneteOk = true;
 		Double massePlanete = e.getMasse();
 		while (!massePlaneteOk) {
-			massePlanete = saisieDouble("Saisir la masse de la planete");
+			massePlanete = saisieDouble("Saisir la masse de la planete (en kg)");
 			if (massePlanete >= e.getMasse() || massePlanete <= 0d) {
 				System.out.println("La masse de la planete est incorrecte");
 			} else {
@@ -150,17 +150,17 @@ public class App {
 		boolean diametrePlaneteOk = true;
 		Double diametrePlanete= 0d;
 		while (!diametrePlaneteOk) {
-			diametrePlanete= saisieDouble("Saisir le diametre de la planete");
+			diametrePlanete= saisieDouble("Saisir le diametre de la planet (en km)");
 			if (diametrePlanete <= 0d) {
 				System.out.println("Le diametre de l'etoile est incorrect");
 			} else {
 				diametrePlaneteOk=true;		
 			}
 		}
-		Double x0Planete=saisieDouble("Saisir la position x0 de la planete");
-		Double y0Planete=saisieDouble("Saisir la position y0 de la planete");
-		Double vitX0Planete=saisieDouble("Saisir la vitesse selon l'axe x de la planete");
-		Double vitY0Planete=saisieDouble("Saisir la vitesse selon l'axe y de la planete");
+		Double x0Planete=saisieDouble("Saisir la position x0 de la planete (en km par rapport à l'etoile)");
+		Double y0Planete=saisieDouble("Saisir la position y0 de la planete (en km par rapport à l'etoile)");
+		Double vitX0Planete=saisieDouble("Saisir la vitesse selon l'axe x de la planete (en km/s par rapport à l'etoile)");
+		Double vitY0Planete=saisieDouble("Saisir la vitesse selon l'axe y de la planete (en km/s par rapport à l'etoile)");
 
 		Planete p = new Planete(massePlanete,diametrePlanete,x0Planete,y0Planete,vitX0Planete,vitY0Planete,nomPlanete,1);
 		daoSI.insert(p);
@@ -186,7 +186,7 @@ public class App {
 				int idPlaneteMere = saisieInt("\nSaisir l'id de la planete autour de laquelle le satellite orbitera ");
 				String nomSatellite = saisieString("\nSaisir le nom du satellite'");
 				while (!masseSatelliteOk) {
-					masseSatellite = saisieDouble("Saisir la masse du satellite");
+					masseSatellite = saisieDouble("Saisir la masse du satellite (en kg)");
 					if (masseSatellite >= p.getMasse() || massePlanete <= 0d) {
 						System.out.println("La masse du satellite est incorrecte");
 					} else {
@@ -194,7 +194,7 @@ public class App {
 					}
 				}
 				while (!diametreSatelliteOk) {
-					diametreSatellite = saisieDouble("Saisir le diametre du satellite");
+					diametreSatellite = saisieDouble("Saisir le diametre du satellite (en km)");
 					if (diametreSatellite <= 0d) {
 						System.out.println("Le diametre du satellite est incorrect");
 					} else {
@@ -202,10 +202,10 @@ public class App {
 					}
 				}
 
-				Double x0Satellite=saisieDouble("Saisir la position x0 du satellite");
-				Double y0Satellite=saisieDouble("Saisir la position y0 du satellite");
-				Double vitX0Satellite=saisieDouble("Saisir la vitesse selon l'axe x du satellite");
-				Double vitY0Satellite=saisieDouble("Saisir la vitesse selon l'axe y du satellite");
+				Double x0Satellite=saisieDouble("Saisir la position x0 du satellite (en km par rapport à l'etoile)");
+				Double y0Satellite=saisieDouble("Saisir la position y0 du satellite (en km par rapport à l'etoile)");
+				Double vitX0Satellite=saisieDouble("Saisir la vitesse selon l'axe x du satellite (en km/s par rapport à l'etoile)");
+				Double vitY0Satellite=saisieDouble("Saisir la vitesse selon l'axe y du satellite (en km/s par rapport à l'etoile)");
 
 				Satellite s = new Satellite(masseSatellite, diametreSatellite, x0Satellite, y0Satellite, vitX0Satellite, vitY0Satellite, nomSatellite, idPlaneteMere);
 				daoSI.insert(s);		
