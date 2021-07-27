@@ -58,14 +58,16 @@ public class App {
 
 		System.out.println("\nCree ton systeme solaire!");
 		System.out.println("1- Se connecter");
-		System.out.println("2- Fermer l'appli");
+		System.out.println("2- Crï¿½ation d'un compte utilisateur");
+		System.out.println("3- Fermer l'appli");
 		int choix = saisieInt("Choisir un menu");
 		switch(choix) 
 		{
 		case 1 : String login = saisieString("\nSaisir login"); String password = saisieString("Saisir password"); connected=DAOCompte.seConnecter(login, password);break;
-		case 2 : System.exit(0);break;
+		case 2 : String loginNewAccount = saisieString("\nSaisir login"); String passwordNewAccount = saisieString("Saisir password"); Utilisateur user = new Utilisateur(loginNewAccount,passwordNewAccount);daoC.insert(user);System.out.println("Compte crï¿½ï¿½.");menuPrincipal();break;
+		case 3 : System.exit(0);break;
 		}		
-		if(connected instanceof Utilisateur) 
+		if(connected instanceof Utilisateur)
 		{
 			menuUtilisateur();
 		}
@@ -206,25 +208,9 @@ public class App {
 				Double vitY0Satellite=saisieDouble("Saisir la vitesse selon l'axe y du satellite");
 
 				Satellite s = new Satellite(masseSatellite, diametreSatellite, x0Satellite, y0Satellite, vitX0Satellite, vitY0Satellite, nomSatellite, idPlaneteMere);
-				ajouterCaracSatellite(s);
 				daoSI.insert(s);		
 			}
-
 		}
-
-	}
-
-	public static void ajouterCaracEtoile(Etoile e){
-		//Ajouter dans la bdd les infos de l'etoile
-		daoSI.insert(e);
-	}
-	public static void ajouterCaracPlanete(Planete p){
-		daoSI.insert(p);
-	}
-
-	public static void ajouterCaracSatellite(Satellite s){
-		daoSI.insert(s);
-
 	}
 
 	public static void chargerSysteme(){
@@ -244,7 +230,7 @@ public class App {
 			c.calculPosition();
 		}
 	}
-	public static void simulation() {//lance et génère la simulation
+	public static void simulation() {//lance et gï¿½nï¿½re la simulation
 		int timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
 		initSimu();
 		for (int t=1;t<timestep;t++) {

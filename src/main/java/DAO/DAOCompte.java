@@ -28,8 +28,34 @@ public class DAOCompte implements IDAO<Compte,Integer>{
 
 	@Override
 	public Compte insert(Compte o) {
-		// TODO Auto-generated method stub
-		return null;
+		try 
+		{
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(urlBDD,loginBDD,passwordBDD);
+			
+			PreparedStatement ps = conn.prepareStatement("INSERT into compte (login,password,type) VALUES (?,?,?)");
+
+			ps.setString(1, o.getLogin());
+			ps.setString(2, o.getPassword());
+			
+			if(o instanceof Utilisateur) 
+			{
+				ps.setString(3, "utilisateur");
+			}
+			else if(o instanceof Admin) 
+			{
+				ps.setString(3, "admin");
+			}
+			ps.executeUpdate();
+
+			ps.close();
+			conn.close();
+		}
+		catch(Exception e) 
+		{
+			e.printStackTrace();
+		}
+		return o;
 	}
 
 	@Override
@@ -59,11 +85,11 @@ public class DAOCompte implements IDAO<Compte,Integer>{
 			
 			while(rs.next()) 
 			{
-				if(rs.getString("type_compte").equals("admin")) 
+				if(rs.getString("type").equals("admin")) 
 				{
 					 c = new Admin(rs.getInt("id"), rs.getString("login"),rs.getString("password"));
 				}
-				else if(rs.getString("type_compte").equals("client"))
+				else if(rs.getString("type").equals("utilisateur"))
 				{
 					 c = new Utilisateur(rs.getInt("id"), rs.getString("login"),rs.getString("password"));
 				}
