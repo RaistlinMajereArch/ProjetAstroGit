@@ -96,14 +96,20 @@ public class App {
 	public static void menuModifier() {
 		System.out.println("\nModifier un corps");
 		System.out.println("1- Modifier une etoile");
-		System.out.println("2- Modifier une planete ou ses satellites");
-		System.out.println("3- Revenir en arriere");
+		System.out.println("2- Modifier une planete");
+		System.out.println("3- Ajout d'une planete");
+		System.out.println("4- Modifier un satellite");
+		System.out.println("5- Ajout d'un satellite");
+		System.out.println("6- Revenir en arriere");
 		int choix = saisieInt("Choisir un menu");
 		switch(choix) 
 		{
 		case 1 : for (int i=0;i<systeme.size();i++){if(systeme.get(i) instanceof Etoile) {modifEtoile(systeme.get(i));}} ;break;
-		//case 2 : modifPlanete();break;
-		case 99: menuUtilisateur();break;
+		case 2 : modifPlanete();break;
+		case 3 : creerPlanete((Etoile) daoSI.findById(1));break;
+		case 4 : modifSatellite();break;
+		//case 5 : creerSatellite((Planete) daoSI.findById());break;
+		case 6: menuUtilisateur();break;
 		}
 		menuUtilisateur();	
 	}
@@ -250,7 +256,7 @@ public class App {
 			while (!masseEtoileOk) {
 				nouvelleMasseEtoile= saisieDouble("Saisissez une nouvelle masse");
 				if (nouvelleMasseEtoile <= 0d) {
-					System.out.println("La masse de la planete est incorrecte");
+					System.out.println("La masse de l'etoile est incorrecte");
 				} else {
 					masseEtoileOk=true;		
 				}
@@ -276,11 +282,188 @@ public class App {
 
 	}
 	
-	public static void modifPlanete(Etoile e) {
-	    System.out.println(e);
-		String choixModif = saisieString("que voulez vous modifier ? (nom/masse/diametre/positionx?positiony/vitessex/vitessey)");
-
+	public static void modifPlanete() 
+	{		
+		for (int i=0;i<systeme.size();i++)
+		{
+			if(systeme.get(i) instanceof Planete) 
+			{
+				System.out.println(systeme.get(i));
+			}
 		}
+	    int selectId = saisieInt("Quelle planete voulez-vous modifier (id)?");
+	    
+	    Planete p = (Planete) daoSI.findById(selectId);
+	    
+		String choixModif = saisieString("que voulez vous modifier ? attribut(nom/masse/diametre/positionx/positiony/vitessex/vitessey) ou (suppression)");
+		if (choixModif.equalsIgnoreCase("nom"))
+		{
+			p.setNom(saisieString("Saisissez un nouveau nom"));
+			daoSI.update(p);
+			chargerSysteme();
+			
+		} 
+		else if (choixModif.equalsIgnoreCase("masse")) 
+		{
+			boolean massePlaneteOk = false;
+			Double nouvelleMassePlanete = 0d;
+			while (!massePlaneteOk) {
+				nouvelleMassePlanete= saisieDouble("Saisissez une nouvelle masse");
+				if (nouvelleMassePlanete <= 0d) {
+					System.out.println("La masse de la planete est incorrecte");
+				} 
+				else 
+				{
+					massePlaneteOk=true;		
+				}
+			}
+			p.setMasse(nouvelleMassePlanete);
+			daoSI.update(p);
+			chargerSysteme();
+			
+		} 
+		else if (choixModif.equalsIgnoreCase("diametre"))
+		{
+			boolean diametrePlaneteOk = false;
+			Double nouveauDiametrePlanete = 0d;
+			while (!diametrePlaneteOk) 
+			{
+				nouveauDiametrePlanete = saisieDouble("Saisir le diametre de la planete");
+				if (nouveauDiametrePlanete <= 0d) 
+				{
+					System.out.println("Le diametre de la planete est incorrect");
+				} 
+				else 
+				{
+					diametrePlaneteOk = true;		
+				}
+			}		
+			p.setDiametre(nouveauDiametrePlanete);
+			daoSI.update(p);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("positionx"))
+		{
+			p.setX(saisieInt("Saisissez une nouvelle position en x par rapport à l'etoile"));
+			daoSI.update(p);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("positiony"))
+		{
+			p.setY(saisieInt("Saisissez une nouvelle position en y par rapport à l'etoile"));
+			daoSI.update(p);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("vitessex"))
+		{
+			p.setVx(saisieInt("Saisissez une nouvelle vitesse en x par rapport à l'etoile"));
+			daoSI.update(p);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("vitessey"))
+		{
+			p.setVy(saisieInt("Saisissez une nouvelle vitesse en y par rapport à l'etoile"));
+			daoSI.update(p);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("suppression"))
+		{
+			daoSI.delete(selectId);
+			chargerSysteme();
+		}
+	}
+	
+	public static void modifSatellite() 
+	{
+		
+		for (int i=0;i<systeme.size();i++)
+		{
+			if(systeme.get(i) instanceof Satellite) 
+			{
+				System.out.println(systeme.get(i));
+			}
+		}
+	    int selectId = saisieInt("Quel satellite voulez-vous modifier (id)?");
+	    
+	    Satellite s = (Satellite) daoSI.findById(selectId);
+			    
+		String choixModif = saisieString("que voulez vous modifier ? (nom/masse/diametre/positionx/positiony/vitessex/vitessey)");
+		if (choixModif.equalsIgnoreCase("nom"))
+		{
+			s.setNom(saisieString("Saisissez un nouveau nom"));
+			daoSI.update(s);
+			chargerSysteme();
+			
+		} 
+		else if (choixModif.equalsIgnoreCase("masse")) 
+		{
+			boolean masseSatelliteOk = false;
+			Double nouvelleMasseSatellite = 0d;
+			while (!masseSatelliteOk) {
+				nouvelleMasseSatellite= saisieDouble("Saisissez une nouvelle masse");
+				if (nouvelleMasseSatellite <= 0d) {
+					System.out.println("La masse du satellite est incorrecte");
+				} 
+				else 
+				{
+					masseSatelliteOk=true;		
+				}
+			}
+			s.setMasse(nouvelleMasseSatellite);
+			daoSI.update(s);
+			chargerSysteme();
+			
+		} 
+		else if (choixModif.equalsIgnoreCase("diametre"))
+		{
+			boolean diametreSatelliteOk = false;
+			Double nouveauDiametreSatellite = 0d;
+			while (!diametreSatelliteOk) 
+			{
+				nouveauDiametreSatellite = saisieDouble("Saisir le diametre du satellite");
+				if (nouveauDiametreSatellite <= 0d) 
+				{
+					System.out.println("Le diametre deu satelliteest incorrect");
+				} 
+				else 
+				{
+					diametreSatelliteOk = true;		
+				}
+			}		
+			s.setDiametre(nouveauDiametreSatellite);
+			daoSI.update(s);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("positionx"))
+		{
+			s.setX(saisieInt("Saisissez une nouvelle position en x par rapport à l'etoile"));
+			daoSI.update(s);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("positiony"))
+		{
+			s.setY(saisieInt("Saisissez une nouvelle position en y par rapport à l'etoile"));
+			daoSI.update(s);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("vitessex"))
+		{
+			s.setVx(saisieInt("Saisissez une nouvelle vitesse en x par rapport à l'etoile"));
+			daoSI.update(s);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("vitessey"))
+		{
+			s.setVy(saisieInt("Saisissez une nouvelle vitesse en y par rapport à l'etoile"));
+			daoSI.update(s);
+			chargerSysteme();
+		}
+		else if (choixModif.equalsIgnoreCase("suppression"))
+		{
+			daoSI.delete(selectId);
+			chargerSysteme();
+		}
+	}
 		
 	
 	
