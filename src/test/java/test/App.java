@@ -115,6 +115,7 @@ public class App {
 			}
 		}
 		Etoile e = new Etoile(masseEtoile, diametreEtoile, nomEtoile);
+		systeme.add(e);
 		daoSI.insert(e);
 		boolean userHasFinished = false;
 		boolean userIsCreating = true;
@@ -163,6 +164,7 @@ public class App {
 		Double vitY0Planete=saisieDouble("Saisir la vitesse selon l'axe y de la planete (en km/s par rapport à l'etoile)");
 
 		Planete p = new Planete(massePlanete,diametrePlanete,x0Planete,y0Planete,vitX0Planete,vitY0Planete,nomPlanete,1);
+		systeme.add(p);
 		daoSI.insert(p);
 
 		boolean satelliteIsPicked = true;
@@ -208,6 +210,7 @@ public class App {
 				Double vitY0Satellite=saisieDouble("Saisir la vitesse selon l'axe y du satellite (en km/s par rapport à l'etoile)");
 
 				Satellite s = new Satellite(masseSatellite, diametreSatellite, x0Satellite, y0Satellite, vitX0Satellite, vitY0Satellite, nomSatellite, idPlaneteMere);
+				systeme.add(s);
 				daoSI.insert(s);		
 			}
 		}
