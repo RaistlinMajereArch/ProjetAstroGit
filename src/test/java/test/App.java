@@ -92,7 +92,26 @@ public class App {
 		menuUtilisateur();
 	}
 
-	public static void creerEtoile(){// cree une etoile au centre du systeme, immobile
+	public static void creerEtoile(){
+		// cree une etoile au centre du systeme, immobile
+	}
+	public static void menuModifier() {
+		System.out.println("\nModifier un corps");
+		System.out.println("1- Modifier une etoile");
+		System.out.println("2- Modifier une planete ou ses satellites");
+		System.out.println("3- Revenir en arriere");
+		int choix = saisieInt("Choisir un menu");
+		switch(choix) 
+		{
+		//case 1 : modifEtoile());break;
+		//case 2 : modifPlanete();break;
+		case 99: menuUtilisateur();break;
+		}
+		menuUtilisateur();	
+	}
+		
+
+	public static void creerEtoile(){
 		String nomEtoile = saisieString("\nSaisir le nom de l'etoile");
 		Double masseEtoile=0d;
 		Double diametreEtoile=0.0;
@@ -138,7 +157,7 @@ public class App {
 
 	public static void creerPlanete(Etoile e){ // cree une planete et ses eventuels satellites
 		String nomPlanete=saisieString("Saisir le nom de la planete");
-		boolean massePlaneteOk = true;
+		boolean massePlaneteOk = false;
 		Double massePlanete = e.getMasse();
 		while (!massePlaneteOk) {
 			massePlanete = saisieDouble("Saisir la masse de la planete (en kg)");
@@ -148,7 +167,7 @@ public class App {
 				massePlaneteOk=true;		
 			}
 		}
-		boolean diametrePlaneteOk = true;
+		boolean diametrePlaneteOk = false;
 		Double diametrePlanete= 0d;
 		while (!diametrePlaneteOk) {
 			diametrePlanete= saisieDouble("Saisir le diametre de la planet (en km)");
@@ -158,10 +177,10 @@ public class App {
 				diametrePlaneteOk=true;		
 			}
 		}
-		Double x0Planete=saisieDouble("Saisir la position x0 de la planete (en km par rapport à l'etoile)");
-		Double y0Planete=saisieDouble("Saisir la position y0 de la planete (en km par rapport à l'etoile)");
-		Double vitX0Planete=saisieDouble("Saisir la vitesse selon l'axe x de la planete (en km/s par rapport à l'etoile)");
-		Double vitY0Planete=saisieDouble("Saisir la vitesse selon l'axe y de la planete (en km/s par rapport à l'etoile)");
+		Double x0Planete=saisieDouble("Saisir la position x0 de la planete (en km par rapport ï¿½ l'etoile)");
+		Double y0Planete=saisieDouble("Saisir la position y0 de la planete (en km par rapport ï¿½ l'etoile)");
+		Double vitX0Planete=saisieDouble("Saisir la vitesse selon l'axe x de la planete (en km/s par rapport ï¿½ l'etoile)");
+		Double vitY0Planete=saisieDouble("Saisir la vitesse selon l'axe y de la planete (en km/s par rapport ï¿½ l'etoile)");
 
 		Planete p = new Planete(massePlanete,diametrePlanete,x0Planete,y0Planete,vitX0Planete,vitY0Planete,nomPlanete,1);
 		systeme.add(p);
@@ -204,20 +223,74 @@ public class App {
 					}
 				}
 
-				Double x0Satellite=saisieDouble("Saisir la position x0 du satellite (en km par rapport à l'etoile)");
-				Double y0Satellite=saisieDouble("Saisir la position y0 du satellite (en km par rapport à l'etoile)");
-				Double vitX0Satellite=saisieDouble("Saisir la vitesse selon l'axe x du satellite (en km/s par rapport à l'etoile)");
-				Double vitY0Satellite=saisieDouble("Saisir la vitesse selon l'axe y du satellite (en km/s par rapport à l'etoile)");
+				Double x0Satellite=saisieDouble("Saisir la position x0 du satellite (en km par rapport ï¿½ l'etoile)");
+				Double y0Satellite=saisieDouble("Saisir la position y0 du satellite (en km par rapport ï¿½ l'etoile)");
+				Double vitX0Satellite=saisieDouble("Saisir la vitesse selon l'axe x du satellite (en km/s par rapport ï¿½ l'etoile)");
+				Double vitY0Satellite=saisieDouble("Saisir la vitesse selon l'axe y du satellite (en km/s par rapport ï¿½ l'etoile)");
 
 				Satellite s = new Satellite(masseSatellite, diametreSatellite, x0Satellite, y0Satellite, vitX0Satellite, vitY0Satellite, nomSatellite, idPlaneteMere);
 				systeme.add(s);
 				daoSI.insert(s);		
 			}
 		}
+
 	}
 
+
+	public static void modifEtoile(Etoile e) {
+		System.out.println(e);
+		String choixModif = saisieString("que voulez vous modifier ? (nom/masse/diametre)");
+		if (choixModif.equalsIgnoreCase("nom")) {
+			String nouveauNomEtoile= saisieString("Saisissez un nouveau nom");
+			e = new Etoile(e.getMasse(), e.getDiametre(), nouveauNomEtoile);
+			
+		} else if (choixModif.equalsIgnoreCase("masse")) {
+			boolean masseEtoileOk = false;
+			Double nouvelleMasseEtoile = 0d;
+			while (!masseEtoileOk) {
+				nouvelleMasseEtoile= saisieDouble("Saisissez une nouvelle masse");
+				if (nouvelleMasseEtoile <= 0d) {
+					System.out.println("La masse de la planete est incorrecte");
+				} else {
+					masseEtoileOk=true;		
+				}
+			}
+			e = new Etoile(nouvelleMasseEtoile, e.getDiametre(), e.getNom());
+		} else if (choixModif.equalsIgnoreCase("diametre")){
+			boolean diametreEtoileOk = false;
+			Double nouveauDiametreEtoile = 0d;
+			while (!diametreEtoileOk) {
+				nouveauDiametreEtoile = saisieDouble("Saisir le diametre de l'etoile");
+				if (nouveauDiametreEtoile <= 0d) {
+					System.out.println("Le diametre de l'etoile est incorrect");
+				} else {
+					diametreEtoileOk = true;		
+				}
+			}		
+			e = new Etoile(e.getMasse(),nouveauDiametreEtoile, e.getNom());
+		}
+
+	}
+	
+	public static void modifPlanete(Etoile e) {
+	    System.out.println(e);
+		String choixModif = saisieString("que voulez vous modifier ? (nom/masse/diametre/positionx?positiony/vitessex/vitessey)");
+
+		}
+		
+	
+	
 	public static void chargerSysteme(){
 		daoS.findAll();
+		String modifChoix = saisieString("Voulez vous modifier votre systeme ?");
+		if (!modifChoix.equalsIgnoreCase("y")) {
+			//simulation();
+		} else {
+			menuModifier();
+		}
+		
+
+		
 	}
 	public static void avancerTimeStepSysteme() {// fait avancer l'ensemble du systeme d'un timestep
 		for (int i=1;i<systeme.size();i++) {
@@ -259,7 +332,7 @@ public class App {
 			daoP.insert(p);
 		}
 	}
-	public static void retourT0() {//supprime les bdd de systeme et positions et réinitialise à t0
+	public static void retourT0() {//supprime les bdd de systeme et positions et rï¿½initialise ï¿½ t0
 		daoS.deleteAll();
 		daoP.deleteAll();
 		initSimu();

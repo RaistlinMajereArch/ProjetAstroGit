@@ -9,9 +9,9 @@ public interface IDAO<T,K>{
 	//Update
 	//Delete
 	
-	String urlBDD="jdbc:mysql://localhost:3306/ProjetAstro";
+	String urlBDD="jdbc:mysql://localhost:8889/ProjetAstro";
 	String loginBDD="root";
-	String passwordBDD="";
+	String passwordBDD="root";
 	
 			
 	public T findById(K id);
