@@ -202,7 +202,9 @@ public class DAOPositions implements IDAO<Position,Integer> {
 
 			PreparedStatement ps = conn.prepareStatement("DELETE from positions");
 			ps.executeUpdate();
-
+			ps = conn.prepareStatement("ALTER TABLE positions AUTO_INCREMENT = 1");
+			ps.executeUpdate();
+			
 			ps.close();
 			conn.close();
 		}
