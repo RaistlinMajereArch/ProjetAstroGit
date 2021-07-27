@@ -1,17 +1,12 @@
 package test;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
-
 import metier.Admin;
 import metier.Compte;
 import metier.CorpsCeleste;
-import metier.Courbe;
 import metier.Planete;
 import metier.Position;
 import metier.Etoile;
@@ -106,7 +101,7 @@ public class App {
 		int choix = saisieInt("Choisir un menu");
 		switch(choix) 
 		{
-		//case 1 : modifEtoile());break;
+		case 1 : for (int i=0;i<systeme.size();i++){if(systeme.get(i) instanceof Etoile) {modifEtoile(systeme.get(i));}} ;break;
 		//case 2 : modifPlanete();break;
 		case 99: menuUtilisateur();break;
 		}
@@ -174,7 +169,7 @@ public class App {
 		boolean diametrePlaneteOk = false;
 		Double diametrePlanete= 0d;
 		while (!diametrePlaneteOk) {
-			diametrePlanete= saisieDouble("Saisir le diametre de la planete (en km)");
+			diametrePlanete= saisieDouble("Saisir le diametre de la planet (en km)");
 			if (diametrePlanete <= 0d) {
 				System.out.println("Le diametre de l'etoile est incorrect");
 			} else {
@@ -195,9 +190,9 @@ public class App {
 		while (satelliteIsPicked) {
 			String satelliteOuiNon = "";
 			if (satelliteIsCreated) {
-				satelliteOuiNon = saisieString("\nVoulez vous ajouter d'autres satellites a cette planete ? (y/n)");
+				satelliteOuiNon = saisieString("\nVoulez vous ajouter d'autres Satellites a cette planete ? (y/n)");
 			} else {
-				satelliteOuiNon = saisieString("\nVoulez vous ajouter un/des satellites a cette planete ? (y/n)");
+				satelliteOuiNon = saisieString("\nVoulez vous ajouter un/des Satellites a cette planete ? (y/n)");
 			}
 			satelliteIsCreated = true;
 			if (!satelliteOuiNon.equalsIgnoreCase("y")) {
@@ -208,7 +203,7 @@ public class App {
 				boolean diametreSatelliteOk = false;
 				Double masseSatellite = 0d;
 				Double diametreSatellite = 0d;
-				int idPlaneteMere = p.getId();
+				int idPlaneteMere = saisieInt("\nSaisir l'id de la planete autour de laquelle le satellite orbitera ");
 				String nomSatellite = saisieString("\nSaisir le nom du satellite'");
 				while (!masseSatelliteOk) {
 					masseSatellite = saisieDouble("Saisir la masse du satellite (en kg)");
@@ -241,12 +236,13 @@ public class App {
 	}
 
 
-	public static void modifEtoile(Etoile e) {
+	public static void modifEtoile(CorpsCeleste e) {
 		System.out.println(e);
 		String choixModif = saisieString("que voulez vous modifier ? (nom/masse/diametre)");
 		if (choixModif.equalsIgnoreCase("nom")) {
-			String nouveauNomEtoile= saisieString("Saisissez un nouveau nom");
-			e = new Etoile(e.getMasse(), e.getDiametre(), nouveauNomEtoile);
+			e.setNom(saisieString("Saisissez un nouveau nom"));
+			daoSI.update(e);
+			chargerSysteme();
 			
 		} else if (choixModif.equalsIgnoreCase("masse")) {
 			boolean masseEtoileOk = false;
@@ -259,7 +255,9 @@ public class App {
 					masseEtoileOk=true;		
 				}
 			}
-			e = new Etoile(nouvelleMasseEtoile, e.getDiametre(), e.getNom());
+			e.setMasse(nouvelleMasseEtoile);
+			daoSI.update(e);
+			chargerSysteme();
 		} else if (choixModif.equalsIgnoreCase("diametre")){
 			boolean diametreEtoileOk = false;
 			Double nouveauDiametreEtoile = 0d;
@@ -271,7 +269,9 @@ public class App {
 					diametreEtoileOk = true;		
 				}
 			}		
-			e = new Etoile(e.getMasse(),nouveauDiametreEtoile, e.getNom());
+			e.setDiametre(nouveauDiametreEtoile);
+			daoSI.update(e);
+			chargerSysteme();
 		}
 
 	}
@@ -285,9 +285,9 @@ public class App {
 	
 	
 	public static void chargerSysteme(){
-		daoS.findAll();
-		String modifChoix = saisieString("Voulez vous modifier votre systeme ?");
-		if (!modifChoix.equalsIgnoreCase("y")) {
+		systeme=daoSI.findAll();
+		String modifChoix = saisieString("Voulez vous modifier votre systeme (y/n)?");
+		if (modifChoix.equalsIgnoreCase("n")) {
 			//simulation();
 		} else {
 			menuModifier();
@@ -345,34 +345,6 @@ public class App {
 		daoS.deleteAll();
 		daoSI.deleteAll();
 		daoP.deleteAll();
-	}
-	
-	public static void affichageTrajectoire() { //affiche la trajectoire des corps celestes 
-		int [] x;
-		int[] y;
-		List<int []> lx= new ArrayList<>();
-		List<int []> ly= new ArrayList<>();
-		List<CorpsCeleste> systeme = daoS.findAll();
-		List<Position> positions;
-		for (CorpsCeleste c : systeme) { //parcours les corps du systemes et recuperes les listes de positions x et y
-			positions = daoP.findByIdCorps(c.getId());
-			x = new int[positions.size()];
-			y = new int[positions.size()];
-			for (int p=0;p<positions.size();p++) {
-				x[p]=(int) Math.round(positions.get(p).getX());
-				y[p]=(int) Math.round(positions.get(p).getY());
-			}
-			lx.add(x);
-			ly.add(y);
-		}
-		JFrame frame = new JFrame("Draw a line");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		Courbe panel = new Courbe(lx,ly);
-		panel.setPreferredSize(new Dimension(2500,2500));
-		JScrollPane jsp = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		frame.add(jsp);
-		frame.setVisible(true);		
 	}
 }		
 
