@@ -193,5 +193,18 @@ public class DAOSysteme implements IDAO<CorpsCeleste,Integer>{
 		}
 		catch(Exception e) {e.printStackTrace();}
 	}
+	public void deleteAll() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection conn = DriverManager.getConnection(urlBDD,loginBDD,passwordBDD);
+
+			PreparedStatement ps = conn.prepareStatement("DELETE from system");
+			ps.executeUpdate();
+
+			ps.close();
+			conn.close();
+		}
+		catch(Exception e) {e.printStackTrace();}
+	}
 
 }

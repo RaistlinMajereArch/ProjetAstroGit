@@ -270,7 +270,11 @@ public class App {
 			daoP.insert(p);
 		}
 	}
-
+	private static void retourT0() {
+		daoS.deleteAll();
+		daoP.deleteAll();
+		initSimu();
+	}
 }		
 
 
