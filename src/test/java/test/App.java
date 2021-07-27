@@ -244,7 +244,7 @@ public class App {
 			}
 		}
 	}
-	private static void initSimu() {//initialise la simulation
+	public static void initSimu() {//initialise la simulation
 
 		List<CorpsCeleste> systeme2=daoSI.findAll();
 		for(int i=0;i<systeme2.size();i++) {
@@ -256,10 +256,15 @@ public class App {
 			daoP.insert(p);
 		}
 	}
-	private static void retourT0() {
+	public static void retourT0() {
 		daoS.deleteAll();
 		daoP.deleteAll();
 		initSimu();
+	}
+	public static void supprimerSimu() {
+		daoS.deleteAll();
+		daoSI.deleteAll();
+		daoP.deleteAll();
 	}
 }		
 
