@@ -125,6 +125,16 @@ public class DAOSystemeInit implements IDAO<CorpsCeleste,Integer> {
 			ps.setString(10, c.getNom());
 			
 			ps.executeUpdate();
+			
+			//Retourne l'ID de l'objet
+			ResultSet rs = ps.getGeneratedKeys();
+			
+			if(rs.next()) 
+			{
+			c.setId(rs.getInt(1));
+			}
+			
+			rs.close();
 			ps.close();
 			conn.close();
 		}
@@ -132,8 +142,6 @@ public class DAOSystemeInit implements IDAO<CorpsCeleste,Integer> {
 		{
 			e.printStackTrace();
 		}
-		
-		//Y ajouter l'id ?
 		return c;
 	}
 
