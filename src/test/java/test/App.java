@@ -1,12 +1,17 @@
 package test;
 
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+
 import metier.Admin;
 import metier.Compte;
 import metier.CorpsCeleste;
+import metier.Courbe;
 import metier.Planete;
 import metier.Position;
 import metier.Etoile;
@@ -80,6 +85,7 @@ public class App {
 		System.out.println("\nMenu");
 		System.out.println("1- Creer un systeme");
 		System.out.println("2- Charger un systeme");
+		System.out.println("3- Retour a l'etat inital");
 		System.out.println("99- Se deconnecter");
 		int choix = saisieInt("Choisir un menu");
 
@@ -87,6 +93,7 @@ public class App {
 		{
 		case 1 : creerEtoile();break;
 		case 2 : chargerSysteme();break;
+		case 3 : retourT0();break;
 		case 99 : connected=null;menuPrincipal();break;
 		}
 		menuUtilisateur();
@@ -471,7 +478,7 @@ public class App {
 		systeme=daoSI.findAll();
 		String modifChoix = saisieString("Voulez vous modifier votre systeme (y/n)?");
 		if (modifChoix.equalsIgnoreCase("n")) {
-			//simulation();
+			simulation();
 		} else {
 			menuModifier();
 		}
@@ -480,32 +487,40 @@ public class App {
 		
 	}
 	public static void avancerTimeStepSysteme() {// fait avancer l'ensemble du systeme d'un timestep
-		for (int i=1;i<systeme.size();i++) {
+		for (int i=0;i<systeme.size();i++) {
 			avancerTimeStepCorps(systeme.get(i));
 		}
 	}
 	public static void avancerTimeStepCorps(CorpsCeleste c) {// fait avancer un corps celeste d'un timestep
-		for (int i=1;i<systeme.size();i++) {
-			List<double[]> forces = null;
-			forces.add(c.calculForce(systeme.get(i)));
-			double[] accelerations =c.calculAcceleration(forces);
-			c.calculVitesse(accelerations);
-			c.calculPosition();
+		for (int i=0;i<systeme.size();i++) {
+			if (c.getId() != systeme.get(i).getId()) {
+				List<double[]> forces = new ArrayList<>();
+				forces.add(c.calculForce(systeme.get(i)));
+				System.out.println(forces.toString());
+				double[] accelerations =c.calculAcceleration(forces);
+				System.out.println(accelerations.toString());
+				c.calculVitesse(accelerations);
+				System.out.println(c.getVx()+ " " + c.getVy());
+				c.calculPosition();
+				System.out.println(c.getX()+ " " + c.getY());
+			}
 		}
 	}
 	public static void simulation() {//lance et genere la simulation
 		int timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
 		initSimu();
-		for (int t=1;t<timestep;t++) {
+		System.out.println(systeme);
+		for (int t=1;t<=timestep;t++) {
 			avancerTimeStepSysteme();
 			for(int i=0;i<systeme.size();i++) {
 				daoS.update(systeme.get(i));
 			}
 			for(int i=0;i<systeme.size();i++) {
-				Position p=new Position(1,systeme.get(i).getId(),systeme.get(i).getX(),systeme.get(i).getY());
+				Position p=new Position(t,systeme.get(i).getId(),systeme.get(i).getX(),systeme.get(i).getY());
 				daoP.insert(p);
 			}
 		}
+		affichageTrajectoire();
 	}
 	public static void initSimu() {//initialise la simulation
 
@@ -513,23 +528,51 @@ public class App {
 		for(int i=0;i<systeme2.size();i++) {
 			daoS.insert(systeme2.get(i));
 		}
-		systeme2=daoS.findAll();
-		for(int i=0;i<systeme2.size();i++) {
-			Position p=new Position(1,systeme2.get(i).getId(),systeme2.get(i).getX(),systeme2.get(i).getY());
+		systeme=daoS.findAll();
+		for(int i=0;i<systeme.size();i++) {
+			Position p=new Position(0,systeme.get(i).getId(),systeme.get(i).getX(),systeme.get(i).getY());
 			daoP.insert(p);
 		}
 	}
 	public static void retourT0() {//supprime les bdd de systeme et positions et r�initialise � t0
 		daoS.deleteAll();
 		daoP.deleteAll();
-		initSimu();
 	}
 	public static void supprimerSimu() {//supprime les bdd de systeme, positions et systeme init
 		daoS.deleteAll();
 		daoSI.deleteAll();
 		daoP.deleteAll();
 	}
+	
+	public static void affichageTrajectoire() { //affiche la trajectoire des corps celestes 
+		int [] x;
+		int[] y;
+		List<int []> lx= new ArrayList<>();
+		List<int []> ly= new ArrayList<>();
+		List<CorpsCeleste> systeme = daoS.findAll();
+		List<Position> positions;
+		for (CorpsCeleste c : systeme) { //parcours les corps du systemes et recuperes les listes de positions x et y
+			positions = daoP.findByIdCorps(c.getId());
+			x = new int[positions.size()];
+			y = new int[positions.size()];
+			for (int p=0;p<positions.size();p++) {
+				x[p]=(int) Math.round(positions.get(p).getX());
+				y[p]=(int) Math.round(positions.get(p).getY());
+			}
+			lx.add(x);
+			ly.add(y);
+		}
+		JFrame frame = new JFrame("Draw a line");
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		Courbe panel = new Courbe(lx,ly);
+		panel.setPreferredSize(new Dimension(2500,2500));
+		JScrollPane jsp = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		frame.add(jsp);
+		frame.setVisible(true);		
+	}
 }		
+	
 
 
 

@@ -142,18 +142,19 @@ public class DAOPositions implements IDAO<Position,Integer> {
 			Class.forName("com.mysql.jdbc.Driver");
 			Connection conn = DriverManager.getConnection(urlBDD,loginBDD,passwordBDD);
 
-			PreparedStatement ps = conn.prepareStatement("INSERT into positions (idTimeStep,id_corpsCeleste,x,y) VALUES (?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("INSERT into positions (id_timeStep,id_corpsCeleste,x,y) VALUES (?,?,?,?)");
 
 			ps.setInt(1, p.getId_timeStep());
 			ps.setInt(2, p.getId_corpsCeleste());
 			ps.setDouble(3, p.getX());
 			ps.setDouble(4, p.getY());
-
+			ps.executeUpdate();
 			ps.close();
 			conn.close();
 		}
 		catch(Exception e) 
-		{
+		{	
+			System.out.println(p);
 			e.printStackTrace();
 		}
 
@@ -172,7 +173,7 @@ public class DAOPositions implements IDAO<Position,Integer> {
 			ps.setInt(2, p.getId_corpsCeleste());
 			ps.setDouble(3, p.getX());
 			ps.setDouble(4, p.getY());
-
+			ps.executeUpdate();
 			ps.close();
 			conn.close();
 		}

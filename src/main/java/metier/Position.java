@@ -7,7 +7,6 @@ public class Position {
 	double y;
 	
 	public Position(int id_timeStep, int id_corpsCeleste, double x, double y) {
-		super();
 		this.id_timeStep = id_timeStep;
 		this.id_corpsCeleste = id_corpsCeleste;
 		this.x = x;
