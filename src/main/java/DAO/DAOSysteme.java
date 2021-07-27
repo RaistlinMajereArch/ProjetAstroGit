@@ -170,6 +170,7 @@ public class DAOSysteme implements IDAO<CorpsCeleste,Integer>{
 			ps.setDouble(8, c.getVy());
 			ps.setBoolean(9, c.isEtat());
 			ps.setString(10, c.getNom());
+			ps.setInt(11, c.getId());
 			ps.executeUpdate();
 
 			ps.close();
