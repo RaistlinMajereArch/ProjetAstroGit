@@ -123,7 +123,8 @@ public class DAOSystemeInit implements IDAO<CorpsCeleste,Integer> {
 			ps.setDouble(8, c.getVy());
 			ps.setBoolean(9, c.isEtat());
 			ps.setString(10, c.getNom());
-
+			
+			ps.executeUpdate();
 			ps.close();
 			conn.close();
 		}
