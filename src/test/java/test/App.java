@@ -174,7 +174,7 @@ public class App {
 		boolean diametrePlaneteOk = false;
 		Double diametrePlanete= 0d;
 		while (!diametrePlaneteOk) {
-			diametrePlanete= saisieDouble("Saisir le diametre de la planet (en km)");
+			diametrePlanete= saisieDouble("Saisir le diametre de la planete (en km)");
 			if (diametrePlanete <= 0d) {
 				System.out.println("Le diametre de l'etoile est incorrect");
 			} else {
@@ -195,9 +195,9 @@ public class App {
 		while (satelliteIsPicked) {
 			String satelliteOuiNon = "";
 			if (satelliteIsCreated) {
-				satelliteOuiNon = saisieString("\nVoulez vous ajouter d'autres Satellites a cette planete ? (y/n)");
+				satelliteOuiNon = saisieString("\nVoulez vous ajouter d'autres satellites a cette planete ? (y/n)");
 			} else {
-				satelliteOuiNon = saisieString("\nVoulez vous ajouter un/des Satellites a cette planete ? (y/n)");
+				satelliteOuiNon = saisieString("\nVoulez vous ajouter un/des satellites a cette planete ? (y/n)");
 			}
 			satelliteIsCreated = true;
 			if (!satelliteOuiNon.equalsIgnoreCase("y")) {
@@ -208,7 +208,7 @@ public class App {
 				boolean diametreSatelliteOk = false;
 				Double masseSatellite = 0d;
 				Double diametreSatellite = 0d;
-				int idPlaneteMere = saisieInt("\nSaisir l'id de la planete autour de laquelle le satellite orbitera ");
+				int idPlaneteMere = p.getId();
 				String nomSatellite = saisieString("\nSaisir le nom du satellite'");
 				while (!masseSatelliteOk) {
 					masseSatellite = saisieDouble("Saisir la masse du satellite (en kg)");
