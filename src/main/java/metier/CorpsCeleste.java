@@ -73,13 +73,13 @@ public abstract class CorpsCeleste {
 	}
 	
 	public void calculVitesse(double[] accelerations) {
-		vx+=accelerations[0]*86400;
-		vy+=accelerations[1]*86400;
+		vx+=accelerations[0]*3600/30;
+		vy+=accelerations[1]*3600/30;
 	}
 	
 	public void calculPosition() {
-		x+=vx*86400;
-		y+=vy*86400;
+		x+=vx*3600/30;
+		y+=vy*3600/30;
 	}
 	
 	public void fusionne(CorpsCeleste c) {
