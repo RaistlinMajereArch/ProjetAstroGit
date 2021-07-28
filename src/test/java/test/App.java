@@ -639,7 +639,7 @@ public class App {
 		tpt.getContentPane().removeAll();
 		
 		avancement.getContentPane().removeAll();
-		String[] TPT = {"E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT1.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT2.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT3.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT4.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT5.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT6.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT7.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT8.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT9.jpeg","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT10.jpeg","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT11.jpg"};
+		String[] TPT = {"TPT1.png","TPT2.png","TPT3.png","TPT4.png","TPT5.png","TPT6.png","TPT7.png","TPT8.png","TPT9.jpeg","TPT10.jpeg","TPT11.jpg"};
 		//tpt.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		tpt.setSize(1600,1000);
 		tpt.setLocationRelativeTo(null);
