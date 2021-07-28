@@ -3,7 +3,7 @@ package metier;
 import java.util.List;
 
 public abstract class CorpsCeleste {
-	protected final double G=6.6743E-17;
+	protected final double G=6.6743E-20;
 	protected int id;
 	protected double masse;
 	protected double diametre;

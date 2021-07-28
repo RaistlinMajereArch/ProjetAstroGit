@@ -477,6 +477,7 @@ public class App {
 	
 	
 	public static void chargerSysteme(){
+		retourT0();
 		systeme=daoSI.findAll();
 		String modifChoix = saisieString("Voulez vous modifier votre systeme (y/n)?");
 		if (modifChoix.equalsIgnoreCase("n")) {
