@@ -16,7 +16,6 @@ import javax.swing.JScrollPane;
 import metier.Admin;
 import metier.Compte;
 import metier.CorpsCeleste;
-import metier.Courbe;
 import metier.Planete;
 import metier.Position;
 import metier.Rectangle;
