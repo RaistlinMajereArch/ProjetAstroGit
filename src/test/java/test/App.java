@@ -1,5 +1,5 @@
 package test;
-
+import org.math.plot.*;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,7 +93,7 @@ public class App {
 
 		switch(choix) 
 		{
-		case 1 : creerEtoile();break;
+		case 1 : daoSI.deleteAll();creerEtoile();break;
 		case 2 : chargerSysteme();break;
 		case 3 : retourT0();break;
 		case 99 : connected=null;menuPrincipal();break;
@@ -551,30 +551,42 @@ public class App {
 	}
 	
 	public static void affichageTrajectoire() { //affiche la trajectoire des corps celestes 
-		int [] x;
-		int[] y;
-		List<int []> lx= new ArrayList<>();
-		List<int []> ly= new ArrayList<>();
+		double [] x;
+		double[] y;
+		List<double []> lx= new ArrayList<>();
+		List<double []> ly= new ArrayList<>();
 		List<CorpsCeleste> systeme = daoS.findAll();
 		List<Position> positions;
 		for (CorpsCeleste c : systeme) { //parcours les corps du systemes et recuperes les listes de positions x et y
 			positions = daoP.findByIdCorps(c.getId());
-			x = new int[positions.size()];
-			y = new int[positions.size()];
+			x = new double[positions.size()];
+			y = new double[positions.size()];
 			for (int p=0;p<positions.size();p++) {
-				x[p]=(int) Math.round(positions.get(p).getX());
-				y[p]=(int) Math.round(positions.get(p).getY());
+				x[p]= positions.get(p).getX();
+				y[p]= positions.get(p).getY();
 			}
 			lx.add(x);
 			ly.add(y);
+			for (double[] d : lx) {
+				System.out.println(Arrays.toString(d));
+			}
 		}
+		
 		JFrame frame = new JFrame("Draw a line");
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		Courbe panel = new Courbe(lx,ly);
+		/*Courbe panel = new Courbe(lx,ly);
 		panel.setPreferredSize(new Dimension(2500,2500));
 		JScrollPane jsp = new JScrollPane(panel,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		frame.add(jsp);
+		frame.add(jsp);*/
+		Plot2DPanel plot = new Plot2DPanel();
+		for (int i=0;i<lx.size();i++) {
+			 plot.addLinePlot("my plot", lx.get(i), ly.get(i));
+		}
+		
+		
+		frame.setContentPane(plot);
+		
 		frame.setVisible(true);		
 	}
 }		
