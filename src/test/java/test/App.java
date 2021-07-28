@@ -8,7 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
 import metier.Admin;
@@ -34,6 +36,7 @@ public class App {
 	static List<CorpsCeleste> systeme=new ArrayList<>();
 	static List<CorpsCeleste> systeme2= new ArrayList<>();
 	static boolean calculSimple;
+	static JFrame tpt = new JFrame("Canard TPT");
 	
 	public static int saisieInt(String msg) 
 	{
@@ -537,6 +540,7 @@ public class App {
 	public static void simulation() {//lance et genere la simulation
 		int timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
 		String Calcul=saisieString("Voulez vous des calculs simplifies ? (y/n)");
+		int ctpt=0;
 		if (Calcul.equals("n")) {
 			calculSimple = false;
 		}
@@ -546,6 +550,11 @@ public class App {
 		initSimu();
 		System.out.println(systeme);
 		for (int t=1;t<=timestep;t++) {
+			if (ctpt==11) {
+				ctpt =0;
+			}
+			affichageTPT(ctpt);
+			ctpt++;
 			avancerTimeStepSysteme();
 			for(int i=0;i<systeme.size();i++) {
 				daoS.update(systeme.get(i));
@@ -615,8 +624,22 @@ public class App {
 		
 		
 		frame.setContentPane(plot);
-		
+		frame.setAlwaysOnTop(true);
 		frame.setVisible(true);		
+	}
+
+	public static void affichageTPT(int i) {
+		tpt.setAlwaysOnTop(true);
+		tpt.getContentPane().removeAll();
+		String[] TPT = {"E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT1.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT2.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT3.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT4.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT5.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT6.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT7.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT8.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT9.jpeg","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT10.jpeg","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT11.jpg"};
+		tpt.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		tpt.setLocationRelativeTo(null);
+		tpt.setVisible(true);
+		String imgUrl = TPT[i];
+		ImageIcon icone = new ImageIcon(imgUrl);
+		JLabel jlabel = new JLabel(icone, JLabel.CENTER);
+		tpt.getContentPane().add(jlabel);
+		tpt.validate();
 	}
 }		
 	
