@@ -19,6 +19,7 @@ import metier.CorpsCeleste;
 import metier.Courbe;
 import metier.Planete;
 import metier.Position;
+import metier.Rectangle;
 import metier.Etoile;
 import metier.Satellite;
 import metier.Utilisateur;
@@ -37,6 +38,10 @@ public class App {
 	static List<CorpsCeleste> systeme2= new ArrayList<>();
 	static boolean calculSimple;
 	static JFrame tpt = new JFrame("Canard TPT");
+	static JFrame avancement = new JFrame("Avancement");
+	static int timestep;
+	static int cpt=0;
+	
 	
 	public static int saisieInt(String msg) 
 	{
@@ -538,7 +543,7 @@ public class App {
 		}
 	}
 	public static void simulation() {//lance et genere la simulation
-		int timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
+		timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
 		String Calcul=saisieString("Voulez vous des calculs simplifies ? (y/n)");
 		int ctpt=0;
 		if (Calcul.equals("n")) {
@@ -555,6 +560,7 @@ public class App {
 			}
 			affichageTPT(ctpt);
 			ctpt++;
+			cpt++;
 			avancerTimeStepSysteme();
 			for(int i=0;i<systeme.size();i++) {
 				daoS.update(systeme.get(i));
@@ -629,17 +635,29 @@ public class App {
 	}
 
 	public static void affichageTPT(int i) {
+		avancement.setAlwaysOnTop(true);
 		tpt.setAlwaysOnTop(true);
 		tpt.getContentPane().removeAll();
+		
+		avancement.getContentPane().removeAll();
 		String[] TPT = {"E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT1.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT2.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT3.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT4.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT5.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT6.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT7.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT8.png","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT9.jpeg","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT10.jpeg","E:\\Users\\Magouille\\meme\\Nouveau dossier\\TPT11.jpg"};
-		tpt.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		//tpt.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		tpt.setSize(1600,1000);
 		tpt.setLocationRelativeTo(null);
 		tpt.setVisible(true);
+		avancement.setSize(timestep+100, 150);
+		avancement.setLocation(0, 0);
+		avancement.setVisible(true);
 		String imgUrl = TPT[i];
 		ImageIcon icone = new ImageIcon(imgUrl);
 		JLabel jlabel = new JLabel(icone, JLabel.CENTER);
+		Rectangle loading = new Rectangle(cpt,timestep);
+		JScrollPane jsp = new JScrollPane(loading,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		avancement.getContentPane().add(jsp);
+		avancement.validate();
 		tpt.getContentPane().add(jlabel);
 		tpt.validate();
+		avancement.setVisible(true);
 	}
 }		
 	
