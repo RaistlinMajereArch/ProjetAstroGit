@@ -1,5 +1,7 @@
 package test;
 import org.math.plot.*;
+
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -599,6 +601,7 @@ public class App {
 		}
 		
 		JFrame frame = new JFrame("Draw a line");
+		frame.setBackground(Color.BLACK);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		/*Courbe panel = new Courbe(lx,ly);
@@ -607,7 +610,7 @@ public class App {
 		frame.add(jsp);*/
 		Plot2DPanel plot = new Plot2DPanel();
 		for (int i=0;i<lx.size();i++) {
-			 plot.addLinePlot("my plot", lx.get(i), ly.get(i));
+			 plot.addLinePlot(systeme.get(i).getNom(), lx.get(i), ly.get(i));
 		}
 		
 		
