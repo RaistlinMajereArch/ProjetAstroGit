@@ -31,7 +31,8 @@ public class App {
 	static DAOPositions daoP = new DAOPositions();
 	static List<CorpsCeleste> systeme=new ArrayList<>();
 	static List<CorpsCeleste> systeme2= new ArrayList<>();
-
+	static boolean calculSimple;
+	
 	public static int saisieInt(String msg) 
 	{
 		Scanner sc = new Scanner(System.in);
@@ -492,7 +493,12 @@ public class App {
 	public static void avancerTimeStepSysteme() {// fait avancer l'ensemble du systeme d'un timestep
 		systeme2= systeme;
 		for (int i=1;i<systeme.size();i++) {
-			avancerTimeStepCorps(systeme.get(i));
+			if (calculSimple) {
+				avancerTimeStepCorpsSimplifie(systeme.get(i));
+			}
+			else {
+				avancerTimeStepCorps(systeme.get(i));
+			}
 		}
 	}
 	public static void avancerTimeStepCorps(CorpsCeleste c) {// fait avancer un corps celeste d'un timestep
@@ -500,21 +506,41 @@ public class App {
 			if (c.getId() != systeme2.get(i).getId()) {
 				List<double[]> forces = new ArrayList<>();
 				forces.add(c.calculForce(systeme2.get(i)));
-				for (double[] f: forces) {
-					System.out.println(Arrays.toString(f));	
+				for (double[] f: forces) {	
 				}
 				//System.out.println(forces.toString());
 				double[] accelerations =c.calculAcceleration(forces);
 
 				c.calculVitesse(accelerations);
-				System.out.println(c.getVx()+ " " + c.getVy());
 				c.calculPosition();
-				System.out.println(c.getX()+ " " + c.getY());
+			}
+		}
+	}
+	
+	public static void avancerTimeStepCorpsSimplifie(CorpsCeleste c) {// fait avancer un corps celeste d'un timestep
+		for (int i=0;i<systeme.size();i++) {
+
+			if (c.getIdParent() == systeme2.get(i).getId()) {
+				List<double[]> forces = new ArrayList<>();
+				forces.add(c.calculForce(systeme2.get(i)));
+				for (double[] f: forces) {
+				}
+				//System.out.println(forces.toString());
+				double[] accelerations =c.calculAcceleration(forces);
+				c.calculVitesse(accelerations);
+				c.calculPosition();
 			}
 		}
 	}
 	public static void simulation() {//lance et genere la simulation
 		int timestep=saisieInt("Saisissez le nombre de timestep pour votre simulation (1 timestep=1jour) :");
+		String Calcul=saisieString("Voulez vous des calculs simplifies ? (y/n)");
+		if (Calcul.equals("n")) {
+			calculSimple = false;
+		}
+		else {
+			calculSimple = true;
+		}
 		initSimu();
 		System.out.println(systeme);
 		for (int t=1;t<=timestep;t++) {
